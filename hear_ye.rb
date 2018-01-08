@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'cgi'
+require 'logger'
 require 'open-uri'
 require 'rss'
 require 'time'
@@ -17,6 +18,10 @@ config = YAML.load_file(File.join(__dir__, 'config', 'config.yml'))
 db_yml = File.join(__dir__, 'db', 'db.yml')
 File.write(db_yml, [].to_yaml) unless File.file?(db_yml)
 db = YAML.load_file(db_yml)
+
+# initialize logger
+logger = Logger.new($stdout)
+logger.level = Logger::INFO
 
 config['repositories'].each do |repository|
   # get rss feed
@@ -39,7 +44,8 @@ config['repositories'].each do |repository|
     tag  = item.link.href[/\A.*tag\/(.*)\Z/, 1]
     desc = item.content.content
 
-    puts "-- NEW: #{user}/#{repo} #{tag}"
+    # log new item
+    logger.info('NEW') { "#{user}/#{repo} #{tag}" }
 
     # build html body
     body = <<~HTML
