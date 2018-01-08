@@ -1,0 +1,8 @@
+mailgun:
+  api_key:      'key-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+  domain:       'domain.tld'
+  from_name:    'RSS GitHub'
+  from_address: 'rss@domain.tld'
+  to:           'myaddress@gmail.com'
+repositories:
+  - user/repo
