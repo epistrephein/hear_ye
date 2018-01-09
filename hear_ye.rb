@@ -25,7 +25,12 @@ logger.level = Logger::INFO
 
 config['repositories'].each do |repository|
   # get rss feed
-  rss = RSS::Parser.parse(open(BASE_URL + repository + ATOM_URL))
+  begin
+    rss = RSS::Parser.parse(open(BASE_URL + repository + ATOM_URL))
+  rescue RSS::Error => e
+    logger.error(repository) { "#{e.message} (#{e.class})" }
+  end
+
   rss.items.each do |item|
     id = item.id.content
     next if db.include?(id)
