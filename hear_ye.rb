@@ -27,7 +27,7 @@ config['repositories'].each do |repository|
   # get rss feed
   begin
     rss = RSS::Parser.parse(open(BASE_URL + repository + ATOM_URL))
-  rescue RSS::Error => e
+  rescue RSS::Error, OpenURI::HTTPError => e
     logger.error(repository) { "#{e.message} (#{e.class})" }
   end
 
