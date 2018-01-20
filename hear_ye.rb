@@ -44,9 +44,9 @@ config['repositories'].each do |repository|
       next
     end
 
-    user = item.link.href[/\A\/(.*?)\/.*\Z/, 1]
-    repo = item.link.href[/\A\/.*?\/(.*?)\/.*\Z/, 1]
-    tag  = item.link.href[/\A.*tag\/(.*)\Z/, 1]
+    user = item.link.href[%r{\A/(.*?)/.*\Z}, 1]
+    repo = item.link.href[%r{\A/.*?/(.*?)/.*\Z}, 1]
+    tag  = item.link.href[%r{\A.*tag/(.*)\Z}, 1]
     desc = item.content.content
 
     # log new item
