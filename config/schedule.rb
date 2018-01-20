@@ -7,6 +7,6 @@ set :output,
     standard: File.join(Dir.pwd, 'log', 'stdout.log'),
     error:    File.join(Dir.pwd, 'log', 'stderr.log')
 
-every 1.hour do
+every 15.minutes do
   ruby 'hear_ye.rb'
 end
