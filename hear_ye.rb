@@ -8,8 +8,8 @@ require 'yaml'
 
 require_relative 'mailgun'
 
-BASE_URL = 'https://github.com/'
-ATOM_URL = '/releases.atom'
+BASE_URL = 'https://github.com/'.freeze
+ATOM_URL = '/releases.atom'.freeze
 
 # load configuration
 config = YAML.load_file(File.join(__dir__, 'config', 'config.yml'))
