@@ -1,4 +1,4 @@
-require 'net/https'
+require 'net/http'
 
 def mailgun(api_key, domain, from_name, from_address, to, subject, message)
   url = URI.parse("https://api.mailgun.net/v3/#{domain}/messages")
