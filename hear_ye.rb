@@ -56,7 +56,7 @@ config['repositories'].each do |repository|
     # build html body
     body = <<~HTML
       <html>
-        <h2><a href="https://github.com#{item.link.href}">#{user}/#{repo} #{tag}</a></h2>
+        <h2><a href="#{URI.join(BASE_URL, item.link.href)}">#{user}/#{repo} #{tag}</a></h2>
         <p>#{date.rfc2822}</p>
         <br>
         #{CGI.unescapeHTML(desc)}
