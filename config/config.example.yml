@@ -5,4 +5,10 @@ mailgun:
   from_address: 'rss@domain.tld'
   to:           'myaddress@gmail.com'
 repositories:
-  - user/repo
+  - rails/rails
+  - twbs/bootstrap
+  - rg3/youtube-dl
+ignore:
+  - alpha
+  - beta
+  - rc

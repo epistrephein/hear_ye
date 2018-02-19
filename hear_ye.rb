@@ -42,8 +42,8 @@ config['repositories'].each do |repository|
     tag  = item.link.href[%r{\A.*tag/(.*)\Z}, 1]
     desc = item.content.content
 
-    # skip items older than a day (useful for first add)
-    if date < (Time.now - 86_400)
+    # skip ignored items and items older than a day (useful for first add)
+    if tag =~ Regexp.union(config['ignore']) || date < (Time.now - 86_400)
       db << id
       File.write(db_yml, db.to_yaml)
       next
