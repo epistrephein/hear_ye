@@ -57,7 +57,6 @@ config['repositories'].each do |repository|
       <html>
         <h2><a href="#{URI.join(BASE_URL, item.link.href)}">#{user}/#{repo} #{tag}</a></h2>
         <p>#{date.rfc2822}</p>
-        <br>
         #{CGI.unescapeHTML(desc)}
       </html>
     HTML
