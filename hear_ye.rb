@@ -37,6 +37,10 @@ config['repositories'].each do |repository|
     next if db.include?(id)
 
     date = item.updated.content
+    user = item.link.href[%r{\A/(.*?)/.*\Z}, 1]
+    repo = item.link.href[%r{\A/.*?/(.*?)/.*\Z}, 1]
+    tag  = item.link.href[%r{\A.*tag/(.*)\Z}, 1]
+    desc = item.content.content
 
     # skip items older than a day (useful for first add)
     if date < (Time.now - 86_400)
@@ -45,15 +49,10 @@ config['repositories'].each do |repository|
       next
     end
 
-    user = item.link.href[%r{\A/(.*?)/.*\Z}, 1]
-    repo = item.link.href[%r{\A/.*?/(.*?)/.*\Z}, 1]
-    tag  = item.link.href[%r{\A.*tag/(.*)\Z}, 1]
-    desc = item.content.content
-
     # log new item
-    logger.info('NEW') { "#{user}/#{repo} #{tag}" }
+    logger.info(repository) { tag }
 
-    # build html body
+    # build email html body
     body = <<~HTML
       <html>
         <h2><a href="#{URI.join(BASE_URL, item.link.href)}">#{user}/#{repo} #{tag}</a></h2>
