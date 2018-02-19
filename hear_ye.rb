@@ -6,7 +6,7 @@ require 'rss'
 require 'time'
 require 'yaml'
 
-require_relative 'mailgun'
+require_relative 'lib/mailgun'
 
 BASE_URL = 'https://github.com/'.freeze
 ATOM_URL = '/releases.atom'.freeze
