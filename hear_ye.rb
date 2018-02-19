@@ -27,7 +27,7 @@ config['repositories'].each do |repository|
   # get rss feed
   begin
     rss = RSS::Parser.parse(open(BASE_URL + repository + ATOM_URL))
-  rescue RSS::Error, OpenURI::HTTPError => e
+  rescue RSS::Error, OpenURI::HTTPError, Timeout::Error => e
     logger.error(repository) { "#{e.message} (#{e.class})" }
     next
   end
@@ -63,16 +63,23 @@ config['repositories'].each do |repository|
       </html>
     HTML
 
-    # send email
-    mailgun(
-      config['mailgun']['api_key'],
-      config['mailgun']['domain'],
-      config['mailgun']['from_name'],
-      config['mailgun']['from_address'],
-      config['mailgun']['to'],
-      "#{user}/#{repo} #{tag}",
-      body
-    )
+    # send email via mailgun
+    begin
+      tries ||= 2
+      mailgun(
+        config['mailgun']['api_key'],
+        config['mailgun']['domain'],
+        config['mailgun']['from_name'],
+        config['mailgun']['from_address'],
+        config['mailgun']['to'],
+        "#{user}/#{repo} #{tag}",
+        body
+      )
+    rescue Net::HTTPBadResponse, Errno::ECONNRESET, Timeout::Error => e
+      retry if (tries -= 1).positive?
+      logger.error(repository) { "#{e.message} (#{e.class})" }
+      next
+    end
 
     # write db to file
     db << id
