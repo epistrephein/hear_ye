@@ -4,11 +4,11 @@ mailgun:
   from_name:    'RSS GitHub'
   from_address: 'rss@domain.tld'
   to:           'myaddress@gmail.com'
-repositories:
-  - rails/rails
-  - twbs/bootstrap
-  - rg3/youtube-dl
 ignore:
   - alpha
   - beta
   - rc
+repositories:
+  - rails/rails
+  - twbs/bootstrap
+  - rg3/youtube-dl
