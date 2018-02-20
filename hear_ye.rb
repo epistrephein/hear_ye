@@ -11,8 +11,12 @@ require_relative 'lib/mailgun'
 BASE_URL = 'https://github.com/'.freeze
 ATOM_URL = '/releases.atom'.freeze
 
-# load configuration
+# load and validate configuration
 config = YAML.load_file(File.join(__dir__, 'config', 'config.yml'))
+keys = %w[mailgun ignore repositories]
+if config.keys.sort != keys.sort
+  raise "Invalid config file, missing keys: #{(keys - config.keys).join(', ')}"
+end
 
 # load db
 db_yml = File.join(__dir__, 'db', 'db.yml')
