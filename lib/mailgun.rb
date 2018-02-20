@@ -1,4 +1,5 @@
 require 'net/http'
+require 'net/https'
 
 def mailgun(api_key, domain, from_name, from_address, to, subject, message)
   url = URI.parse("https://api.mailgun.net/v3/#{domain}/messages")
@@ -15,5 +16,7 @@ def mailgun(api_key, domain, from_name, from_address, to, subject, message)
   res = Net::HTTP.new(url.host, url.port)
   res.use_ssl = true
   res.verify_mode = OpenSSL::SSL::VERIFY_PEER
-  res.start { |http| http.request(req) }
+  response = res.start { |http| http.request(req) }
+
+  raise response.code_type unless response.code_type == Net::HTTPOK
 end

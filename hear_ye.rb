@@ -77,7 +77,8 @@ config['repositories'].each do |repository|
         "#{user}/#{repo} #{tag}",
         body
       )
-    rescue Net::HTTPBadResponse, Errno::ECONNRESET, Timeout::Error => e
+    rescue Net::HTTPClientError, Net::HTTPBadResponse, Net::ProtoServerError,
+           Errno::ECONNRESET, Timeout::Error => e
       retry if (tries -= 1).positive?
       logger.error(repository) { "#{e.message} (#{e.class})" }
       next
