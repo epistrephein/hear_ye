@@ -41,9 +41,9 @@ config['repositories'].each do |repository|
     next if db.include?(id)
 
     date = item.updated.content
-    user = item.link.href[%r{\A/(.*?)/.*\Z}, 1]
-    repo = item.link.href[%r{\A/.*?/(.*?)/.*\Z}, 1]
-    tag  = item.link.href[%r{\A.*tag/(.*)\Z}, 1]
+    user = item.link.href[%r{github.com/(.*?)/.*\z}, 1]
+    repo = item.link.href[%r{github.com/.*?/(.*?)/.*\z}, 1]
+    tag  = item.link.href[%r{github.com.*tag/(.*)\z}, 1]
     desc = item.content.content
 
     # skip ignored items and items older than a day (useful for first add)
