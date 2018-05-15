@@ -14,7 +14,7 @@ ATOM_URL = '/releases.atom'.freeze
 # load and validate configuration
 config = YAML.load_file(File.join(__dir__, 'config', 'config.yml'))
 keys = %w[mailgun ignore repositories]
-if config.keys.sort != keys.sort
+if keys & config != keys
   raise "Invalid config file, missing keys: #{(keys - config.keys).join(', ')}"
 end
 
