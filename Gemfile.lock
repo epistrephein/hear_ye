@@ -33,7 +33,7 @@ PLATFORMS
 DEPENDENCIES
   pry
   rubocop
-  whenever (~> 0.10.0)
+  whenever (~> 0.10)
 
 BUNDLED WITH
    1.16.3
