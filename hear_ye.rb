@@ -17,7 +17,7 @@ ATOM_URL = '/releases.atom'
 config = YAML.load_file(File.join(__dir__, 'config', 'config.yml'))
 keys = %w[mailgun ignore repositories]
 
-if keys & config != keys
+unless (keys & config.keys) == keys
   raise "Invalid config file, missing keys: #{(keys - config.keys).join(', ')}"
 end
 
@@ -43,6 +43,7 @@ config['repositories'].each do |repository|
     id = item.id.content
     next if db.include?(id)
 
+    # build repo infos
     date = item.updated.content
     user = item.link.href[%r{github.com/(.*?)/.*\z}, 1]
     repo = item.link.href[%r{github.com/.*?/(.*?)/.*\z}, 1]
