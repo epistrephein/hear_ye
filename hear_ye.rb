@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bundler/setup'
 require 'cgi'
 require 'logger'
@@ -8,12 +10,13 @@ require 'yaml'
 
 require_relative 'lib/mailgun'
 
-BASE_URL = 'https://github.com/'.freeze
-ATOM_URL = '/releases.atom'.freeze
+BASE_URL = 'https://github.com/'
+ATOM_URL = '/releases.atom'
 
 # load and validate configuration
 config = YAML.load_file(File.join(__dir__, 'config', 'config.yml'))
 keys = %w[mailgun ignore repositories]
+
 if keys & config != keys
   raise "Invalid config file, missing keys: #{(keys - config.keys).join(', ')}"
 end
